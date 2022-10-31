@@ -1,9 +1,9 @@
 import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.simplecoin.Block;
-import org.simplecoin.SimpleChain;
+import org.simplecoin.*;
 
+import java.security.Security;
 import java.util.ArrayList;
 
 public class SimpleChainTest {
@@ -71,6 +71,26 @@ public class SimpleChainTest {
         // then
         Assertions.assertNotNull(blockchainJson);
         Assertions.assertTrue(isValid);
+    }
+
+    @Test
+    public void 트랜잭션_생성_유효성검증_테스트(){
+        // given
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        Wallet walletA = new Wallet();
+        Wallet walletB = new Wallet();
+
+        // when
+        System.out.println("Private and public keys: ");
+        System.out.println(StringUtil.getStringFromKey(walletA.privateKey));
+        System.out.println(StringUtil.getStringFromKey(walletA.publicKey));
+        Transaction transaction = new Transaction(walletA.publicKey, walletB.publicKey, 5, null);
+        transaction.generateSignature(walletA.privateKey);
+
+        // then
+        System.out.println("Is signature verified.");
+        System.out.println(transaction.verifySignature());
+        Assertions.assertTrue(transaction.verifySignature());
     }
 }
 
