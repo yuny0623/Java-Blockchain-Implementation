@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class SimpleChain {
     public static ArrayList<Block> blockchain = new ArrayList<>();
-    public static int difficulty = 10;
+    public static int difficulty = 6;
     public static void main(String[] args) {
         blockchain.add(new Block("first block", "0"));
         System.out.println("Trying to Mine Block 1... ");
