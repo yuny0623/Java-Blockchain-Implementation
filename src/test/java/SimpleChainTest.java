@@ -5,7 +5,7 @@ import org.simplecoin.Block;
 public class SimpleChainTest {
 
     @Test
-    public void 블록테스트(){
+    public void 블록_생성_테스트(){
         // given
         Block genesisBlock = new Block("first block", "0");
         Block secondBlock = new Block("second block", genesisBlock.hash);
