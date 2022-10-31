@@ -2,6 +2,7 @@ import com.google.gson.GsonBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.simplecoin.Block;
+import org.simplecoin.SimpleChain;
 
 import java.util.ArrayList;
 
@@ -43,6 +44,32 @@ public class SimpleChainTest {
 
     @Test
     public void 채굴테스트(){
+        // given
+        ArrayList<Block> blockchain = new ArrayList<>();
+        int difficulty = 6;
 
+        // when
+        blockchain.add(new Block("first block", "0"));
+        System.out.println("Trying to Mine Block 1... ");
+        blockchain.get(0).mineBlock(difficulty);
+
+        blockchain.add(new Block("second block", blockchain.get(blockchain.size() - 1).hash));
+        System.out.println("Trying to Mine Block 2... ");
+        blockchain.get(1).mineBlock(difficulty);
+
+        blockchain.add(new Block("third block", blockchain.get(blockchain.size() - 1).hash));
+        System.out.println("Trying to Mine Block 3... ");
+        blockchain.get(2).mineBlock(difficulty);
+
+        boolean isValid = SimpleChain.isChainValid();
+        System.out.println("\nBlockChain is Valid: " + isValid);
+
+        String blockchainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
+        System.out.println("\nThe block chain: ");
+        System.out.println(blockchainJson);
+
+        // then
+        Assertions.assertNotNull(blockchainJson);
+        Assertions.assertTrue(isValid);
     }
 }
