@@ -54,6 +54,11 @@ public class StringUtil {
         return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
+    //Returns difficulty string target, to compare to hash. eg difficulty of 5 will return "00000"
+    public static String getDifficultyString(int difficulty) {
+        return new String(new char[difficulty]).replace('\0', '0');
+    }
+
     public static String getMerkleRoot(ArrayList<Transaction> transactions){
         int count = transactions.size();
         ArrayList<String> previousTreeLayer = new ArrayList<>();
