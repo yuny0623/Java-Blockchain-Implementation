@@ -4,12 +4,16 @@ import com.google.gson.GsonBuilder;
 
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SimpleChain {
     public static ArrayList<Block> blockchain = new ArrayList<>();
-    public static int difficulty = 6;
+    public static HashMap<String, TransactionOutput> UTXOs = new HashMap<String, TransactionOutput>(); // list of all unspent transactions.
+    public static int difficulty = 3;
+    public static float minimumTransaction = 0.1f;
     public static Wallet walletA;
     public static Wallet walletB;
+    public static Transaction genesisTransaction;
 
     public static void main(String[] args) {
         // set bouncy castle as Security Provider
