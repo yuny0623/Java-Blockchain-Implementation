@@ -40,4 +40,9 @@ public class SimpleChainTest {
         // then
         Assertions.assertNotNull(blockchainJson);
     }
+
+    @Test
+    public void 채굴테스트(){
+
+    }
 }
