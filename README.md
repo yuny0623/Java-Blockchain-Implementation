@@ -15,7 +15,7 @@
  - 유저들이 트랜잭션을 만들 수 있는 기능을 제공함. 
 
 개선할 점:
-실제 Transaction이 Local이 아니라 네트워크 상에서 이루어질 수 있도록 변경
+실제 동작이 Local이 아니라 네트워크 상에서 이루어질 수 있도록 개선가능 
 
 Reference:
 > https://medium.com/programmers-blockchain
