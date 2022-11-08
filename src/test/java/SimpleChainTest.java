@@ -5,6 +5,7 @@ import org.simplecoin.*;
 
 import java.security.Security;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SimpleChainTest {
 
@@ -91,6 +92,60 @@ public class SimpleChainTest {
         System.out.println("Is signature verified.");
         System.out.println(transaction.verifySignature());
         Assertions.assertTrue(transaction.verifySignature());
+    }
+
+    @Test
+    public void 최종_테스트(){
+        // given
+        ArrayList<Block> blockchain = new ArrayList<>();
+        HashMap<String, TransactionOutput> UTXOs = new HashMap<>(); // list of all unspent transactions.
+        int difficulty = 3;
+        float minimumTransaction = 0.1f;
+        Wallet walletA;
+        Wallet walletB;
+        Transaction genesisTransaction;
+
+        // when
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider()); //Setup Bouncey castle as a Security Provider
+
+        walletA = new Wallet();
+        walletB = new Wallet();
+        Wallet coinbase = new Wallet();
+
+        genesisTransaction = new Transaction(coinbase.publicKey, walletA.publicKey, 100f, null);
+        genesisTransaction.generateSignature(coinbase.privateKey);	 //manually sign the genesis transaction
+        genesisTransaction.transactionId = "0"; //manually set the transaction id
+        genesisTransaction.outputs.add(new TransactionOutput(genesisTransaction.reciepient, genesisTransaction.value, genesisTransaction.transactionId)); //manually add the Transactions Output
+        UTXOs.put(genesisTransaction.outputs.get(0).id, genesisTransaction.outputs.get(0)); //its important to store our first transaction in the UTXOs list.
+
+        System.out.println("Creating and Mining Genesis block... ");
+        Block genesis = new Block("0");
+        genesis.addTransaction(genesisTransaction);
+        SimpleChain.addBlock(genesis);
+
+        // then
+        Block block1 = new Block(genesis.hash);
+        System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+        System.out.println("\nWalletA is Attempting to send funds (40) to WalletB...");
+        block1.addTransaction(walletA.sendFunds(walletB.publicKey, 40f));
+        SimpleChain.addBlock(block1);
+        System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+        System.out.println("WalletB's balance is: " + walletB.getBalance());
+
+        Block block2 = new Block(block1.hash);
+        System.out.println("\nWalletA Attempting to send more funds (1000) than it has...");
+        block2.addTransaction(walletA.sendFunds(walletB.publicKey, 1000f));
+        SimpleChain.addBlock(block2);
+        System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+        System.out.println("WalletB's balance is: " + walletB.getBalance());
+
+        Block block3 = new Block(block2.hash);
+        System.out.println("\nWalletB is Attempting to send funds (20) to WalletA...");
+        block3.addTransaction(walletB.sendFunds( walletA.publicKey, 20));
+        System.out.println("\nWalletA's balance is: " + walletA.getBalance());
+        System.out.println("WalletB's balance is: " + walletB.getBalance());
+
+        Assertions.assertTrue(SimpleChain.isChainValid());
     }
 }
 
