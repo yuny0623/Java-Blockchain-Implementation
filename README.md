@@ -1,6 +1,6 @@
-# ✨ [블록체인 스터디] Simple Blockchain implementation with Java 
+# ✨ [블록체인 스터디] Simple Blockchain implementation
 
-## 📒 Project Intro
+## 📒 Study Intro
 ```
 아래 레퍼런스의 예제와 설명을 참고하여 자바로 블록체인을 구현해봅니다.   
 블록체인의 기본적인 개념을 구현하고 간단한 작업 증명 시스템을 구현해봅니다.
@@ -18,11 +18,19 @@
  8️⃣ 유저들이 트랜잭션을 만들 수 있는 기능을 제공함. 
 ```
 
-# ⌚️ To do:
+## 🚥 Tech
 ```
- 1️⃣ 실제 동작이 Local이 아니라 네트워크 상에서 이루어질 수 있도록 개선가능 
+ 🍎 Java 17
+ 🍇 Gson 
+ 🍑 bouncycastle
 ```
-# 🔗 Reference:
+
+## ⌚ To do:
+```
+ 1️⃣ 실제 동작이 Local이 아니라 네트워크 상에서도 이루어질 수 있도록 개선 
+```
+
+## 🔗 Reference:
 -  https://medium.com/programmers-blockchain/create-simple-blockchain-java-tutorial-from-scratch-6eeed3cb03fa   
 -  https://medium.com/programmers-blockchain/creating-your-first-blockchain-with-java-part-2-transactions-2cdac335e0ce
 
